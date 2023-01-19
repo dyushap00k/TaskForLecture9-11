@@ -8,32 +8,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api/books")
 public class BookController {
     @Autowired
     private BookDAO bookDAO;
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody Book book){
         bookDAO.createBook(book);
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("{id}")
     public Book read(@PathVariable Long id){
         return bookDAO.readBook(id);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void update(@RequestBody Book book){
         bookDAO.updateBook(book);
     }
 
-    @GetMapping("/get-all")
+    @GetMapping
     public List<Book> getAll(){
         return bookDAO.getAllBooks();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){
         bookDAO.deleteBook(id);
     }

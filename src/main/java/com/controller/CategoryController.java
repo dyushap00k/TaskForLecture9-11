@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("/api/categories")
 public class CategoryController {
     @Autowired
     private CategoryDAO categoryDAO;
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody Category category) {
         categoryDAO.createCategory(category);
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("{id}")
     public Category read(@PathVariable Long id) {
         return categoryDAO.readCategory(id);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void update(@RequestBody Category category) {
         categoryDAO.updateCategory(category);
     }
 
-    @GetMapping("/get-all")
+    @GetMapping
     public List<Category> getAll(){
         return categoryDAO.getAllCategories();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){
         categoryDAO.deleteCategory(id);
     }

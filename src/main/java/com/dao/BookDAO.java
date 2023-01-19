@@ -40,18 +40,22 @@ public class BookDAO {
     }
 
     public Book readBook(Long id) {
+        Book resultBook = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_READ.toString())) {
             statement.setLong(1, id);
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new Book(id, resultSet.getString("title"), categoryDAO.readCategory(resultSet.getLong("category_id")), resultSet.getString("author"));
+                resultBook = new Book();
+                resultBook.setId(id);
+                resultBook.setTitle(resultSet.getString("title"));
+                resultBook.setAuthor(resultSet.getString("author"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return resultBook;
     }
 
     public void updateBook(Book book) {
@@ -85,7 +89,12 @@ public class BookDAO {
              PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_GET_ALL.toString())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                booksList.add(new Book(resultSet.getLong("id"), resultSet.getString("title"), categoryDAO.readCategory(resultSet.getLong("category_id")), resultSet.getString("author")));
+                Book book = new Book();
+                book.setId(resultSet.getLong("id"));
+                book.setTitle(resultSet.getString("title"));
+                book.setCategory(categoryDAO.readCategory(resultSet.getLong("category_id")));
+                book.setAuthor(resultSet.getString("author"));
+                booksList.add(book);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -12,13 +12,6 @@ public class Book {
 
     }
 
-    public Book(Long id, String title, Category category, String author) {
-        this.id = id;
-        this.title = title;
-        this.category = category;
-        this.author = author;
-    }
-
     @Override
     public String toString() {
         return "Book{" +

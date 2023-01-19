@@ -36,17 +36,20 @@ public class CategoryDAO {
     }
 
     public Category readCategory(Long id) {
+        Category resultCategory = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_READ.toString())) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new Category(id, resultSet.getString("name"));
+                resultCategory = new Category();
+                resultCategory.setId(id);
+                resultCategory.setName(resultSet.getString("name"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null; //TODO
+        return resultCategory;
     }
 
     public void updateCategory(Category category) {
@@ -76,7 +79,10 @@ public class CategoryDAO {
              PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_GET_ALL.toString())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                categoriesList.add(new Category(resultSet.getLong("id"), resultSet.getString("name")));
+                Category category = new Category();
+                category.setId(resultSet.getLong("id"));
+                category.setName(resultSet.getString("name"));
+                categoriesList.add(category);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
