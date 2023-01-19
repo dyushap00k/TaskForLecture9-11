@@ -21,8 +21,8 @@ public class BookDAO {
 
     public void createBook(Book book) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.BOOK_CREATE.toString());
-             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.BOOK_RETURN_ID.toString())) {
+             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.BOOK_INSERT_QUERY.toString());
+             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.BOOK_RETURN_ID_QUERY.toString())) {
 
             statement1.setString(1, book.getTitle());
             statement1.setLong(2, book.getCategory().getId());
@@ -42,7 +42,7 @@ public class BookDAO {
     public Book readBook(Long id) {
         Book resultBook = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_READ.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_SELECT_QUERY.toString())) {
             statement.setLong(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -60,7 +60,7 @@ public class BookDAO {
 
     public void updateBook(Book book) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_UPDATE.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_UPDATE_QUERY.toString())) {
             statement.setString(1, book.getTitle());
             statement.setLong(2, book.getCategory().getId());
             statement.setString(3, book.getAuthor());
@@ -74,7 +74,7 @@ public class BookDAO {
 
     public void deleteBook(Long id) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_DELETE.toString())
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_DELETE_QUERY.toString())
         ) {
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -86,7 +86,7 @@ public class BookDAO {
     public List<Book> getAllBooks() {
         List<Book> booksList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_GET_ALL.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.BOOK_QUERY_SELECT_ALL.toString())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = new Book();

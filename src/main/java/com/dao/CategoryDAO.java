@@ -20,8 +20,8 @@ public class CategoryDAO {
 
     public void createCategory(Category category) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.CATEGORY_CREATE.toString());
-             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.RETURN_CATEGORY_ID.toString())
+             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.CATEGORY_INSERT_QUERY.toString());
+             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.CATEGORY_RETURN_ID_QUERY.toString())
         ) {
             statement1.setString(1, category.getName());
             statement1.executeUpdate();
@@ -38,7 +38,7 @@ public class CategoryDAO {
     public Category readCategory(Long id) {
         Category resultCategory = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_READ.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_SELECT_QUERY.toString())) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -54,7 +54,7 @@ public class CategoryDAO {
 
     public void updateCategory(Category category) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_UPDATE.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_UPDATE_QUERY.toString())) {
             statement.setString(1, category.getName());
             statement.setLong(2, category.getId());
             statement.executeUpdate();
@@ -65,7 +65,7 @@ public class CategoryDAO {
 
     public void deleteCategory(Long id) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_DELETE.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_DELETE_QUERY.toString())) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class CategoryDAO {
     public List<Category> getAllCategories() {
         List<Category> categoriesList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_GET_ALL.toString())) {
+             PreparedStatement statement = connection.prepareStatement(SqlCommands.CATEGORY_SELECT_ALL_QUERY.toString())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Category category = new Category();
