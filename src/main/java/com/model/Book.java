@@ -8,10 +8,6 @@ public class Book {
     private Category category;
     private String author;
 
-    public Book() {
-
-    }
-
     @Override
     public String toString() {
         return "Book{" +

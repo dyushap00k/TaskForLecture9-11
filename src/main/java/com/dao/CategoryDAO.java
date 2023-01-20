@@ -20,8 +20,8 @@ public class CategoryDAO {
 
     public void createCategory(Category category) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.CATEGORY_INSERT_QUERY.toString());
-             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.CATEGORY_RETURN_ID_QUERY.toString())
+             PreparedStatement statement1 = connection.prepareStatement(SqlCommands.CATEGORY_INSERT_QUERY.toString());
+             PreparedStatement statement2 = connection.prepareStatement(SqlCommands.CATEGORY_RETURN_ID_QUERY.toString())
         ) {
             statement1.setString(1, category.getName());
             statement1.executeUpdate();

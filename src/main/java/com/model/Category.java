@@ -6,9 +6,6 @@ public class Category {
     private Long id;
     private String name;
 
-    public Category() {
-    }
-
     public Long getId() {
         return id;
     }
