@@ -15,13 +15,12 @@ public class BookDtoMapper {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setTitle(book.getTitle());
         bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setCategory(book.getCategory());
+        bookDTO.setCategory(CategoryDtoMapper.toDto(book.getCategory()));
         return bookDTO;
     }
 
     public static Book toBook(BookCreationDTO bookCreationDTO) {
         Book book = new Book();
-        book.setId(bookCreationDTO.getId());
         book.setTitle(bookCreationDTO.getTitle());
         book.setAuthor(bookCreationDTO.getAuthor());
         book.setCategory(bookCreationDTO.getCategory());

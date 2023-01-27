@@ -1,12 +1,22 @@
 package com.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+    @ManyToOne
     private Category category;
     private String author;
+
+    public Book() {
+        //for JPA
+    }
 
     @Override
     public String toString() {

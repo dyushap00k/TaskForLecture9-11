@@ -1,11 +1,9 @@
 package com.model.dto;
 
-import com.model.Category;
-
 public class BookDTO {
     private String title;
     private String author;
-    private Category category;
+    private CategoryDTO category;
 
     public String getTitle() {
         return title;
@@ -23,11 +21,11 @@ public class BookDTO {
         this.author = author;
     }
 
-    public Category getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryDTO category) {
         this.category = category;
     }
 }
